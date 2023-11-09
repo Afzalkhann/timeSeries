@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-Time Data Display</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+    #data-container {
+      text-align: left;
+      max-width: 600px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="data-container">
+    <h2>Real-Time Data Display</h2>
+    <div id="data"></div>
+    <p>Success Rate: <span id="success-rate">0%</span></p>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.1/socket.io.js"></script>
+  <script>
+    const socket = io('http://localhost:3000'); // Connect to the backend socket server
+    const encryptionKey = 'your-secret-key'; // Use the same encryption key as in the backend
+
+
+    socket.on('messageStream', (messageStream) => {
+      const dataContainer = document.getElementById('data');
+      const successRateElement = document.getElementById('success-rate');
+
+      const messages = messageStream.split('|');
+      let successCount = 0;
+
+      messages.forEach((encryptedMessage) => {
+    try {
+      // ... (decryption and processing code remains the same)
+
+      // Only count successfully processed messages for success rate calculation
+      successCount++;
+    } catch (error) {
+      console.error('Error processing message:', error);
+    }
+  });
+
+      // Calculate and display success rate
+    const successRate = ((successCount / messages.length) * 100).toFixed(2);
+    successRateElement.textContent = `${successRate}%`;
+});
+  </script>
+</body>
+
+</html>

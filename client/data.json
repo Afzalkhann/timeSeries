@@ -1,0 +1,5 @@
+{
+  "names": ["Name1", "Name2", "Name3"],
+  "origins": ["Origin1", "Origin2", "Origin3"],
+  "destinations": ["Destination1", "Destination2", "Destination3"]
+}
